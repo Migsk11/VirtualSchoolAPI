@@ -1,10 +1,23 @@
 package com.api.TechLearnAPI.model.entity;
 
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Espaco")
 public class Espaco {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(length = 100, nullable = false)
     private String tipo_espaco;
+
+    @Column(length = 55, nullable = false)
     private String status_espaco;
+
+    @Column(length = 100, nullable = false)
     private String nome;
 
 

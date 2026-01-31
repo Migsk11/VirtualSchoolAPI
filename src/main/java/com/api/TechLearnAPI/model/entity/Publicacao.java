@@ -1,17 +1,37 @@
 package com.api.TechLearnAPI.model.entity;
 
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
+@Table(name = "Publicacao")
 public class Publicacao {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(length = 100, nullable = false)
     private String titulo;
+
+    @Column(length = 55)
     private String subtitulo;
+
+    @Column(length = 255, nullable = false)
     private String descricao;
+
+
     private byte[] imagem_url;
+
+    @Column(nullable = false)
     private Date data_publicacao;
+
+    @Column(length = 100, nullable = false)
     private String tipo_publicacao;
+
+    @Column(length = 55, nullable = false)
     private String status_publicacao;
 
 

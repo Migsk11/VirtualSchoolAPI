@@ -1,13 +1,28 @@
 package com.api.TechLearnAPI.model.entity;
 
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "Usuario")
 public class Usuario {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(length = 100, nullable = false)
     private String nome;
+
+    @Column(length = 155, nullable = false)
     private String email;
+
+    @Column(length = 255, nullable = false)
     private String senha;
+
+    @Column(length = 55, nullable = false)
     private String tipo_usuario;
+
+    @Column(length = 155)
     private String status_cliente;
 
 

@@ -1,12 +1,24 @@
 package com.api.TechLearnAPI.model.entity;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
+@Table(name = "Evento")
 public class Evento {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(length = 100, nullable = false)
     private String titulo;
+
+    @Column(nullable = false)
     private Date data_inicio;
+
+    @Column(nullable = false)
     private Date data_fim;
 
 
