@@ -1,15 +1,23 @@
 package com.api.TechLearnAPI.controller;
 
-import com.api.TechLearnAPI.model.entity.Usuario;
-import com.api.TechLearnAPI.model.repository.UsuarioRepository;
-import com.api.TechLearnAPI.model.services.UsuarioServices;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Map;
+import com.api.TechLearnAPI.model.entity.Usuario;
+import com.api.TechLearnAPI.model.repository.UsuarioRepository;
+import com.api.TechLearnAPI.model.services.UsuarioServices;
 
 @RestController
 @RequestMapping("/api/v1/usuarios")
@@ -27,6 +35,23 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioServices.ContarUsuarios());
     }
 
+
+    public record LoginRequest(String email) {}
+
+    //POST LOGIN
+    @PostMapping("/login")
+    public Boolean ReceberLogin(@RequestBody LoginRequest data) {
+        String email = data.email();
+        try {
+            usuarioServices.findByEmail(email);
+            return true /* foi encontrado o email */;
+        } catch (Exception e) {
+            return false /* nao foi encontrado o email */;
+        }
+        
+    }
+    
+    
 
 
     //GET

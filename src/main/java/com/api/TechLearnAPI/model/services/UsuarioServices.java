@@ -1,19 +1,27 @@
 package com.api.TechLearnAPI.model.services;
 
-import com.api.TechLearnAPI.model.entity.Usuario;
-import com.api.TechLearnAPI.model.repository.UsuarioRepository;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import com.api.TechLearnAPI.model.entity.Usuario;
+import com.api.TechLearnAPI.model.repository.UsuarioRepository;
 
 @Service
 public class UsuarioServices {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+
+
+    public Usuario findByEmail(String email){
+        return usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
+    }
 
     public long ContarUsuarios(){
         return usuarioRepository.count();
