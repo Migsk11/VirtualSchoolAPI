@@ -15,7 +15,9 @@ public class UsuarioServices {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-
+    public long ContarUsuarios(){
+        return usuarioRepository.count();
+    }
 
 
     //Listar todos os usuarios

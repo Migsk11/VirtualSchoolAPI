@@ -21,6 +21,14 @@ public class UsuarioController {
     private UsuarioServices usuarioServices;
 
 
+    //GET QUANT USUARIOS
+    @GetMapping("/quantiaUsuarios")
+    public ResponseEntity<Long> QuantiaUsuarios(){
+        return ResponseEntity.ok(usuarioServices.ContarUsuarios());
+    }
+
+
+
     //GET
     @GetMapping
     public ResponseEntity<List<Usuario>> ListarTodos(){
