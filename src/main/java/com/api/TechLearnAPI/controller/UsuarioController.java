@@ -36,11 +36,11 @@ public class UsuarioController {
     }
 
 
-    public record LoginRequest(String email) {}
+    public record EmailRequest(String email) {}
 
     //POST LOGIN
     @PostMapping("/login")
-    public Boolean ReceberLogin(@RequestBody LoginRequest data) {
+    public Boolean ReceberLogin(@RequestBody EmailRequest data) {
         String email = data.email();
         try {
             usuarioServices.findByEmail(email);
@@ -50,8 +50,20 @@ public class UsuarioController {
         }
         
     }
-    
-    
+
+
+    //POST PARA VER SE USUARIO EXISTE
+    @PostMapping("/exists")
+    public Boolean UsuarioExiste(@RequestBody EmailRequest data){
+        String email = data.email();
+        try{
+            usuarioServices.findByEmail(email);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+        
+    }
 
 
     //GET
