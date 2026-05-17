@@ -1,6 +1,11 @@
 package com.api.TechLearnAPI.model.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Usuario")
@@ -20,10 +25,7 @@ public class Usuario {
     private String senha;
 
     @Column(length = 55, nullable = false)
-    private String tipo_usuario;
-
-    @Column(length = 155)
-    private String status_cliente;
+    private String role;
 
 
     //Getters And Setters
@@ -60,20 +62,12 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getTipo_usuario() {
-        return tipo_usuario;
+    public String getRole() {
+        return role;
     }
 
-    public void setTipo_usuario(String tipo_usuario) {
-        this.tipo_usuario = tipo_usuario;
-    }
-
-    public String getStatus_cliente() {
-        return status_cliente;
-    }
-
-    public void setStatus_cliente(String status_cliente) {
-        this.status_cliente = status_cliente;
+    public void setRole(String role) {
+        this.role = role;
     }
 
 }

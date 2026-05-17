@@ -1,8 +1,13 @@
 package com.api.TechLearnAPI.model.entity;
 
-import jakarta.persistence.*;
-
 import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 
 @Entity
@@ -21,9 +26,6 @@ public class Notificacao {
 
     @Column(nullable = false)
     private Date data_envio;
-
-    @Column(length = 55, nullable = false)
-    private String status_notificacao;
 
     //Getters And Setters
 
@@ -58,14 +60,5 @@ public class Notificacao {
     public void setData_envio(Date data_envio) {
         this.data_envio = data_envio;
     }
-
-    public String getStatus_notificacao() {
-        return status_notificacao;
-    }
-
-    public void setStatus_notificacao(String status_notificacao) {
-        this.status_notificacao = status_notificacao;
-    }
-
 
 }
