@@ -68,6 +68,23 @@ public class UsuarioController {
         
     }
 
+        //POST MASTER?
+    @PostMapping("/isMaster")
+    public Boolean ReceberLoginMaster(@RequestBody EmailRequest data) {
+        String email = data.email();
+        String role;
+        Usuario usuario;
+        try {
+            usuario = usuarioServices.findByEmail(email);
+            role = usuario.getRole();
+            if(role.equals("ROLE_MASTER")) return true;
+            return false /* usuario existe, porem nao eh adm */;
+        } catch (Exception e) {
+            return false /* nao foi encontrado o email */;
+        }
+        
+    }
+
 
     //POST PARA VER SE USUARIO EXISTE
     @PostMapping("/exists")
