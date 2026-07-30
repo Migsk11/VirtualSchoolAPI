@@ -23,6 +23,11 @@ public class UsuarioServices {
             .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
     }
 
+    public Usuario findBySenha(String senha){
+        return usuarioRepository.findBySenha(senha)
+            .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
+    }
+
     public long ContarUsuarios(){
         return usuarioRepository.count();
     }

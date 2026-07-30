@@ -36,14 +36,16 @@ public class UsuarioController {
     }
 
 
-    public record EmailRequest(String email) {}
-
+    public record LoginRequest(String email, String senha) {}
+    
     //POST LOGIN
     @PostMapping("/login")
-    public Boolean ReceberLogin(@RequestBody EmailRequest data) {
+    public Boolean ReceberLogin(@RequestBody LoginRequest data) {
         String email = data.email();
+        String senha = data.senha();
         try {
             usuarioServices.findByEmail(email);
+            // usuarioServices.findBySenha(senha);
             return true /* foi encontrado o email */;
         } catch (Exception e) {
             return false /* nao foi encontrado o email */;
@@ -53,7 +55,7 @@ public class UsuarioController {
 
     //POST ADMIN?
     @PostMapping("/isAdm")
-    public Boolean ReceberLoginAdm(@RequestBody EmailRequest data) {
+    public Boolean ReceberLoginAdm(@RequestBody LoginRequest data) {
         String email = data.email();
         String role;
         Usuario usuario;
@@ -70,7 +72,7 @@ public class UsuarioController {
 
         //POST MASTER?
     @PostMapping("/isMaster")
-    public Boolean ReceberLoginMaster(@RequestBody EmailRequest data) {
+    public Boolean ReceberLoginMaster(@RequestBody LoginRequest data) {
         String email = data.email();
         String role;
         Usuario usuario;
@@ -88,7 +90,7 @@ public class UsuarioController {
 
     //POST PARA VER SE USUARIO EXISTE
     @PostMapping("/exists")
-    public Boolean UsuarioExiste(@RequestBody EmailRequest data){
+    public Boolean UsuarioExiste(@RequestBody LoginRequest data){
         String email = data.email();
         try{
             usuarioServices.findByEmail(email);
