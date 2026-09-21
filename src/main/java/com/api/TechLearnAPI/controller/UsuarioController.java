@@ -3,6 +3,8 @@ package com.api.TechLearnAPI.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,10 @@ public class UsuarioController {
     @Autowired
     private UsuarioServices usuarioServices;
 
+    private static final Logger log = LoggerFactory.getLogger(UsuarioServices.class);
+
+    
+
 
     //GET QUANT USUARIOS
     @GetMapping("/quantiaUsuarios")
@@ -44,11 +50,13 @@ public class UsuarioController {
         String email = data.email();
         String senha = data.senha();
         try {
-            usuarioServices.findByEmail(email);
-            // usuarioServices.findBySenha(senha);
-            return true /* foi encontrado o email */;
+            Usuario usuario = usuarioServices.findByEmail(email);
+            boolean findPassword = usuario.getSenha().equals(senha);
+
+            return findPassword;
         } catch (Exception e) {
-            return false /* nao foi encontrado o email */;
+            log.error("Houve um erro no fluxo: Login");
+            return false /* algum erro no processo */;
         }
         
     }
@@ -62,15 +70,16 @@ public class UsuarioController {
         try {
             usuario = usuarioServices.findByEmail(email);
             role = usuario.getRole();
-            if(role.equals("ROLE_ADM")) return true;
-            return false /* usuario existe, porem nao eh adm */;
+            
+            return role.equals("ROLE_ADM");
         } catch (Exception e) {
-            return false /* nao foi encontrado o email */;
+            log.error("Houve um erro no fluxo: Autenticação do Nivel de Acesso");
+            return false;
         }
         
     }
 
-        //POST MASTER?
+    //POST MASTER?
     @PostMapping("/isMaster")
     public Boolean ReceberLoginMaster(@RequestBody LoginRequest data) {
         String email = data.email();
@@ -79,10 +88,11 @@ public class UsuarioController {
         try {
             usuario = usuarioServices.findByEmail(email);
             role = usuario.getRole();
-            if(role.equals("ROLE_MASTER")) return true;
-            return false /* usuario existe, porem nao eh adm */;
+
+            return role.equals("ROLE_MASTER");
         } catch (Exception e) {
-            return false /* nao foi encontrado o email */;
+            log.error("Houve um erro no fluxo: Autenticação do Nivel de Acesso");
+            return false;
         }
         
     }

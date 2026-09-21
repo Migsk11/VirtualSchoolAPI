@@ -20,12 +20,12 @@ public class UsuarioServices {
 
     public Usuario findByEmail(String email){
         return usuarioRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
+            .orElseThrow(() -> new RuntimeException("Email nao encontrado"));
     }
 
     public Usuario findBySenha(String senha){
         return usuarioRepository.findBySenha(senha)
-            .orElseThrow(() -> new RuntimeException("Usuario nao encontrado"));
+            .orElseThrow(() -> new RuntimeException("Senha nao encontrada"));
     }
 
     public long ContarUsuarios(){
