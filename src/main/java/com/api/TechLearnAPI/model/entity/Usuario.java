@@ -6,6 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
+
 
 @Entity
 @Table(name = "Usuario")
@@ -18,6 +22,8 @@ public class Usuario {
     @Column(length = 100, nullable = false)
     private String nome;
 
+    @Email(message="Email invalido...")
+    @NotBlank(message="Email obrigatorio...")
     @Column(length = 155, nullable = false)
     private String email;
 
@@ -25,7 +31,7 @@ public class Usuario {
     private String senha;
 
     @Column(length = 55, nullable = false)
-    private String role;
+    private String roleUsuario;
 
 
     //Getters And Setters
@@ -62,12 +68,12 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoleUsuario() {
+        return roleUsuario;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleUsuario(String roleUsuario) {
+        this.roleUsuario = roleUsuario;
     }
 
 }

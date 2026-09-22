@@ -1,7 +1,10 @@
 package com.api.TechLearnAPI.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +25,29 @@ public class PublicacaoController {
 
     @Autowired
     private PublicacaoServices publicacaoServices;
+    private static final Logger log = LoggerFactory.getLogger(PublicacaoServices.class);
+
 
     // POST - Criar uma nova publicação
     @PostMapping
-    public ResponseEntity<Publicacao> criarPublicacao(@RequestBody Publicacao publicacao) {
+    public ResponseEntity<?> criarPublicacao(@RequestBody Publicacao publicacao) {
         try {
+            publicacaoServices.ValidarData(publicacao.getData_publicacao());
             Publicacao novaPublicacao = publicacaoServices.save(publicacao);
-            return ResponseEntity.status(HttpStatus.CREATED).body(novaPublicacao);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+            return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(novaPublicacao);
+
+        } catch (RuntimeException e) {
+            log.error(e.getMessage());
+
+            return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Map.of(
+                    "error", "Dados invalidos",
+                    "message", e.getMessage()
+                ));
         }
     }
 

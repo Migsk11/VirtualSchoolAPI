@@ -13,7 +13,7 @@ import com.api.TechLearnAPI.model.services.PublicacaoServices;
 @Component
 public class PublicacaoScheduler {
 
-    private static final Logger logger = LoggerFactory.getLogger(PublicacaoScheduler.class);
+    private static final Logger log = LoggerFactory.getLogger(VerificadorScheduler.class);
 
     @Autowired
     private PublicacaoServices publicacaoServices;
@@ -43,12 +43,12 @@ public class PublicacaoScheduler {
             publicacaoServices.expirarPublicacoesAntigas();
             
             // Log de sucesso
-            logger.info("[SCHEDULER] Verificação de expiração concluída com sucesso!");
+            log.info("[SCHEDULER] Verificação de expiração concluída com sucesso!");
             
         } catch (Exception e) {
             // Captura qualquer erro que ocorra durante a execução
             // Mantém a aplicação estável mesmo se a tarefa falhar
-            logger.error("[SCHEDULER] Erro ao processar expiração de publicações: {}", e.getMessage(), e);
+            log.error("[SCHEDULER] Erro ao processar expiração de publicações: {}", e.getMessage(), e);
         }
     }
 }

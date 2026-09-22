@@ -14,7 +14,20 @@ import com.api.TechLearnAPI.model.repository.PublicacaoRepository;
 public class PublicacaoServices {
 
     @Autowired
-    private PublicacaoRepository publicacaoRepository;
+    private PublicacaoRepository publicacaoRepository; 
+
+
+    public void ValidarData(Date paramDate){
+        Date currentDate = new Date();
+
+        if (!paramDate.after(currentDate)){
+            throw new RuntimeException("Data invalida...");
+        }
+
+    }
+
+
+
 
     // Criar e salvar uma nova publicação
     public Publicacao save(Publicacao publicacao) {

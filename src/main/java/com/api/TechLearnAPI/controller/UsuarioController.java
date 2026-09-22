@@ -21,12 +21,15 @@ import com.api.TechLearnAPI.model.entity.Usuario;
 import com.api.TechLearnAPI.model.repository.UsuarioRepository;
 import com.api.TechLearnAPI.model.services.UsuarioServices;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/usuarios")
 public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
     @Autowired
     private UsuarioServices usuarioServices;
 
@@ -69,7 +72,7 @@ public class UsuarioController {
         Usuario usuario;
         try {
             usuario = usuarioServices.findByEmail(email);
-            role = usuario.getRole();
+            role = usuario.getRoleUsuario();
             
             return role.equals("ROLE_ADM");
         } catch (Exception e) {
@@ -87,7 +90,7 @@ public class UsuarioController {
         Usuario usuario;
         try {
             usuario = usuarioServices.findByEmail(email);
-            role = usuario.getRole();
+            role = usuario.getRoleUsuario();
 
             return role.equals("ROLE_MASTER");
         } catch (Exception e) {
@@ -128,7 +131,7 @@ public class UsuarioController {
                 "id", usuario.getId(),
                 "nome", usuario.getNome(),
                 "email", usuario.getEmail(),
-                "role", usuario.getRole()
+                "role", usuario.getRoleUsuario()
             );
 
             return ResponseEntity.ok(resposta);
@@ -145,7 +148,7 @@ public class UsuarioController {
 
     //POST
     @PostMapping("/auth/register")
-    public ResponseEntity<Usuario> SalvarUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> SalvarUsuario(@Valid @RequestBody Usuario usuario) {
         Usuario novo = usuarioRepository.save(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(novo);
     }
