@@ -39,12 +39,12 @@ public class VerificadorController {
     public ResponseEntity<?> CriarUUID(@RequestBody VerificadorRequest data){
         String email = data.email();
         try {
-            verificadorServices.save(email);
+            verificadorServices.GerarVerificador(email);
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
         
     }

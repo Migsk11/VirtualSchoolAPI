@@ -36,19 +36,19 @@ public class PublicacaoScheduler {
     public void expirarPublicacoesAgendadas() {
         try {
             // Log para rastrear quando a tarefa foi iniciada
-            System.out.println("[SCHEDULER] Iniciando verificação de publicações expiradas...");
+            // System.out.println("[SCHEDULER] Iniciando verificação de publicações expiradas...");
             
             // Chama o serviço para deletar publicações com mais de 90 dias
             // A lógica de calcular 90 dias e executar a deleção está encapsulada no Service
             publicacaoServices.expirarPublicacoesAntigas();
             
             // Log de sucesso
-            log.info("[SCHEDULER] Verificação de expiração concluída com sucesso!");
+            // log.info("[SCHEDULER] Verificação de expiração concluída com sucesso!");
             
         } catch (Exception e) {
             // Captura qualquer erro que ocorra durante a execução
             // Mantém a aplicação estável mesmo se a tarefa falhar
-            log.error("[SCHEDULER] Erro ao processar expiração de publicações: {}", e.getMessage(), e);
+            // log.error("[SCHEDULER] Erro ao processar expiração de publicações: {}", e.getMessage(), e);
         }
     }
 }

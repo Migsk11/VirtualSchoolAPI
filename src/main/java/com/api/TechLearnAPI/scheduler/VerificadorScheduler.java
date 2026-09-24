@@ -26,7 +26,7 @@ public class VerificadorScheduler {
     public void expirarTokenVerificador() {
         try {
 
-            System.out.println("[SCHEDULER] Iniciando verificação de publicações expiradas...");
+            // System.out.println("[SCHEDULER] Iniciando verificação de publicações expiradas...");
             
             
             LocalDateTime now = LocalDateTime.now();
@@ -34,10 +34,10 @@ public class VerificadorScheduler {
             verificadorRepository.deleteByDateExpireBefore(now);
             
 
-            log.info("[SCHEDULER] Verificação de expiração concluída com sucesso!");
+            // log.info("[SCHEDULER] Verificação de expiração concluída com sucesso!");
             
         } catch (Exception e) {
-            log.error("[SCHEDULER] Erro ao processar expiração de publicações: {}", e.getMessage(), e);
+            // log.error("[SCHEDULER] Erro ao processar expiração de publicações: {}", e.getMessage(), e);
         }
     }
 }
