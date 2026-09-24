@@ -45,7 +45,8 @@ public class VerificadorServices {
             .orElseThrow();
 
 
-
+        // colocar tudo em um Try/Catch
+        // verificar a role do usuario... apenas (ADM ou MASTER)
         if(verificadorRepository.existsByUsuarioId(usuario.getId())){
             throw new RuntimeException("O seu token ja foi enviado... aguarde 15 muitos para tentar novamente.");
         }
