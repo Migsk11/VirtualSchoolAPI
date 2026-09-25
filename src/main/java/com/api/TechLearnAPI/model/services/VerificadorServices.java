@@ -1,7 +1,7 @@
 package com.api.TechLearnAPI.model.services;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,13 +37,11 @@ public class VerificadorServices {
 
 
 
-    public Boolean VerificarKeyMethod(String key){
+    public Boolean VerificarKeyMethod(String keyValidation){
 
         try {
-            
-            UUID keyToUUID = UUID.fromString(key);
 
-            return verificadorRepository.existsByUuid(keyToUUID);
+            return verificadorRepository.existsByKeyValidation(Long.parseLong(keyValidation));
             
         } catch (IllegalArgumentException e) {
             
@@ -67,14 +65,17 @@ public class VerificadorServices {
             throw new RuntimeException("O seu token ja foi enviado... aguarde 15 muitos para tentar novamente.");
         }
         else{
-            verificador.setUuid(UUID.randomUUID());
+
+            Long keyGenerator = ThreadLocalRandom.current().nextLong(1000, 10000);
+
+            verificador.setKeyValidation(keyGenerator);
             verificador.setUsuario(usuario);
             verificador.setDateExpire(LocalDateTime.now().plusMinutes(15));
-            verificador.setStatus_uuid(true);
             
 
-            emailSenderServices.sendMail(email, verificador.getUuid()); // esta com problema...
+            emailSenderServices.sendMail(email, verificador.getKeyValidation());
 
+            
             return verificadorRepository.save(verificador);
         }
 

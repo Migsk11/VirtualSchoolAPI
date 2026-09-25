@@ -1,7 +1,6 @@
 package com.api.TechLearnAPI.model.entity;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,9 +20,7 @@ import jakarta.persistence.Table;
 public class Verificador {
 
     @Id 
-    private UUID uuid;
-
-    private Boolean status_uuid;
+    private Long keyValidation;
 
     @OneToOne
     @JoinColumn(name="usuario_id")
@@ -49,20 +46,12 @@ public class Verificador {
         this.dateExpire = dateExpire;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public Long getKeyValidation() {
+        return keyValidation;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public Boolean getStatus_uuid() {
-        return status_uuid;
-    }
-
-    public void setStatus_uuid(Boolean status_uuid) {
-        this.status_uuid = status_uuid;
+    public void setKeyValidation(Long keyValidation) {
+        this.keyValidation = keyValidation;
     }
 
     public Usuario getUsuario() {

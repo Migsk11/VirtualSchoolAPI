@@ -1,7 +1,6 @@
 package com.api.TechLearnAPI.model.services;
 
 import java.util.Date;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -30,11 +29,11 @@ public class EmailSenderServices {
     }
 
 
-    public void sendMail(String email, UUID uuid){
+    public void sendMail(String email, Long keyValidation){
 
         final String mailContentText = 
         "Verifique seu acesso com a seguinte chave: \n" + 
-        uuid + 
+        keyValidation + 
         "\n\n" + 
         "Copie (Crtl + C) e cole (Crtl + V) no campo escrito 'Cole a chave aqui'...";
 
