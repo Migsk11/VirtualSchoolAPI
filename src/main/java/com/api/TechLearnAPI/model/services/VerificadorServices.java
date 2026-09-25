@@ -66,7 +66,7 @@ public class VerificadorServices {
         }
         else{
 
-            Long keyGenerator = ThreadLocalRandom.current().nextLong(1000, 10000);
+            Long keyGenerator = ThreadLocalRandom.current().nextLong(10000, 100000);
 
             verificador.setKeyValidation(keyGenerator);
             verificador.setUsuario(usuario);
