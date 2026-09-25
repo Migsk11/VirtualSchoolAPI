@@ -9,14 +9,20 @@ import com.api.TechLearnAPI.model.entity.Verificador;
 import jakarta.transaction.Transactional;
 
 public interface VerificadorRepository extends JpaRepository<Verificador, Long> {
+    
 
-    boolean existsByUsuarioId(Long id);
+    @Transactional 
+    void deleteByUsuarioId(Long id);
+
 
     @Transactional 
     void deleteByDateExpireBefore(LocalDateTime now);
 
+
+    boolean existsByUsuarioId(Long id);
+
+
     boolean existsByKeyValidation(Long keyValidation);
 
-    void deleteByUsuarioId(Long id);
 
 }
