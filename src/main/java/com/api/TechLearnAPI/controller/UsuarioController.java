@@ -155,7 +155,7 @@ public class UsuarioController {
 
     //DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> DeletarUsuario(@PathVariable String id) {
+    public ResponseEntity<Object> DeletarUsuario(@PathVariable Long id) {
         return usuarioServices.deleteById(id);
     }
 

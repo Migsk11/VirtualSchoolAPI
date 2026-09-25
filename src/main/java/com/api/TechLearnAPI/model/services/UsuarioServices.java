@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 
 import com.api.TechLearnAPI.model.entity.Usuario;
 import com.api.TechLearnAPI.model.repository.UsuarioRepository;
+import com.api.TechLearnAPI.model.repository.VerificadorRepository;
 
 @Service
 public class UsuarioServices {
 
     @Autowired
+    private VerificadorRepository verificadorRepository;
+    @Autowired
     private UsuarioRepository usuarioRepository;
+
 
 
 
@@ -54,11 +58,12 @@ public class UsuarioServices {
     public boolean idExists(String id) {
         return usuarioRepository.existsById(Long.parseLong(id));
     }
-    public ResponseEntity<Object> deleteById(String id){
+    public ResponseEntity<Object> deleteById(Long id){
 
         try{
-            if(idExists((id))){
-                usuarioRepository.deleteById(Long.parseLong(id));
+            if(idExists((id.toString()))){
+                verificadorRepository.deleteByUsuarioId(id);
+                usuarioRepository.deleteById(id);
                 return ResponseEntity.ok().body(
                         Map.of(
                                 "status", 200,

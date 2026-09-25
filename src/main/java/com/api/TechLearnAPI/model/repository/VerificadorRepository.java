@@ -17,4 +17,6 @@ public interface VerificadorRepository extends JpaRepository<Verificador, Long> 
 
     boolean existsByKeyValidation(Long keyValidation);
 
+    void deleteByUsuarioId(Long id);
+
 }
