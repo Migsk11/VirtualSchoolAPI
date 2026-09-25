@@ -3,8 +3,8 @@ package com.api.TechLearnAPI.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +17,10 @@ import com.api.TechLearnAPI.model.services.VerificadorServices;
 
 
 
-
+//
 
 @RestController
-@RequestMapping("/api/v1/Verificador")
+@RequestMapping("/api/v1/verificador")
 public class VerificadorController {
 
 
@@ -42,11 +42,32 @@ public class VerificadorController {
             verificadorServices.GerarVerificador(email);
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.ok().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         
     }
+
+
+    @PostMapping("/confirm/{key}")
+    public ResponseEntity<Boolean> VerificarKey(@PathVariable String key) {
+        
+        try {
+
+            return ResponseEntity.ok(verificadorServices.VerificarKeyMethod(key));
+
+        }catch(Exception e){
+
+            log.error(
+                "Local do erro: ", e.getLocalizedMessage(), 
+                "Mensagem do erro: ", e.getMessage()
+            );
+            
+            return ResponseEntity.badRequest().build();
+        }
+
+    }
+    
     
 }

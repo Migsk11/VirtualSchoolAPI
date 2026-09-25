@@ -16,4 +16,6 @@ public interface VerificadorRepository extends JpaRepository<Verificador, UUID> 
     @Transactional 
     void deleteByDateExpireBefore(LocalDateTime now);
 
+    boolean existsByUuid(UUID uuid);
+
 }

@@ -35,6 +35,24 @@ public class VerificadorServices {
     private Logger log = LoggerFactory.getLogger(VerificadorServices.class);
 
 
+
+
+    public Boolean VerificarKeyMethod(String key){
+
+        try {
+            
+            UUID keyToUUID = UUID.fromString(key);
+
+            return verificadorRepository.existsByUuid(keyToUUID);
+            
+        } catch (IllegalArgumentException e) {
+            
+            return false;
+        }
+
+    }
+
+
     
     public Verificador GerarVerificador(String email){
 
@@ -45,8 +63,6 @@ public class VerificadorServices {
             .orElseThrow();
 
 
-        // colocar tudo em um Try/Catch
-        // verificar a role do usuario... apenas (ADM ou MASTER)
         if(verificadorRepository.existsByUsuarioId(usuario.getId())){
             throw new RuntimeException("O seu token ja foi enviado... aguarde 15 muitos para tentar novamente.");
         }
