@@ -45,16 +45,16 @@ public class UsuarioController {
     }
 
 
-    public record LoginRequest(String email, String senha) {}
+    public record LoginRequest(String email, String password) {}
     
     //POST LOGIN
     @PostMapping("/login")
     public Boolean ReceberLogin(@RequestBody LoginRequest data) {
         String email = data.email();
-        String senha = data.senha();
+        String password = data.password();
         try {
             Usuario usuario = usuarioServices.findByEmail(email);
-            boolean findPassword = usuario.getSenha().equals(senha);
+            boolean findPassword = usuario.getPassword().equals(password);
 
             return findPassword;
         } catch (Exception e) {

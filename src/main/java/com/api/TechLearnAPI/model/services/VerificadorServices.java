@@ -62,7 +62,7 @@ public class VerificadorServices {
 
 
         if(verificadorRepository.existsByUsuarioId(usuario.getId())){
-            throw new RuntimeException("O seu token ja foi enviado... aguarde 15 muitos para tentar novamente.");
+            throw new RuntimeException("A sua chave ja foi enviada... aguarde 15 muitos para tentar novamente.");
         }
         else{
 

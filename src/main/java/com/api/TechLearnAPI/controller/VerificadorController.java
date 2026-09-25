@@ -40,7 +40,7 @@ public class VerificadorController {
         String email = data.email();
         try {
             verificadorServices.GerarVerificador(email);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body("A chave foi enviada para o email: " + email);
         } catch (RuntimeException e) {
             return ResponseEntity.ok().body(e.getMessage());
         } catch (Exception e) {

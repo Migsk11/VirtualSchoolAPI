@@ -1,6 +1,6 @@
 package com.api.TechLearnAPI.model.repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,6 +18,6 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Long> {
     @Modifying
     @Transactional
     @Query("DELETE FROM Publicacao p WHERE p.data_publicacao < :dataLimite")
-    void deletarPublicacoesAntigas(Date dataLimite);
+    void deletarPublicacoesAntigas(LocalDate dataLimite);
 }
 

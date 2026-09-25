@@ -27,8 +27,9 @@ public class Usuario {
     @Column(length = 155, nullable = false)
     private String email;
 
-    @Column(length = 255, nullable = false)
-    private String senha;
+    @NotBlank(message="Senha obrigatoria...")
+    @Column(name="user_password", length = 255, nullable = false)
+    private String password;
 
     @Column(length = 55, nullable = false)
     private String roleUsuario;
@@ -60,12 +61,12 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getRoleUsuario() {

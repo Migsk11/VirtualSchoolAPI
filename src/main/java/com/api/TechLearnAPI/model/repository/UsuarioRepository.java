@@ -8,5 +8,5 @@ import com.api.TechLearnAPI.model.entity.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByEmail(String email);
-    Optional<Usuario> findBySenha(String senha);
+    Optional<Usuario> findByPassword(String userPassword);
 }

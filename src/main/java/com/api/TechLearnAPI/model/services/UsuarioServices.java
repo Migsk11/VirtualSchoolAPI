@@ -27,8 +27,8 @@ public class UsuarioServices {
             .orElseThrow(() -> new RuntimeException("Email nao encontrado"));
     }
 
-    public Usuario findBySenha(String senha){
-        return usuarioRepository.findBySenha(senha)
+    public Usuario findByPassword(String password){
+        return usuarioRepository.findByPassword(password)
             .orElseThrow(() -> new RuntimeException("Senha nao encontrada"));
     }
 
@@ -98,7 +98,7 @@ public class UsuarioServices {
         Usuario usuarioExistente = findById(id);
         usuarioExistente.setNome(usuario.getNome());
         usuarioExistente.setEmail(usuario.getEmail());
-        usuarioExistente.setSenha(usuario.getSenha());
+        usuarioExistente.setPassword(usuario.getPassword());
         return usuarioRepository.save(usuarioExistente);
     }
 }

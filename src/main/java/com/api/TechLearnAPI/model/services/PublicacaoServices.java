@@ -1,7 +1,6 @@
 package com.api.TechLearnAPI.model.services;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,10 @@ public class PublicacaoServices {
     private PublicacaoRepository publicacaoRepository; 
 
 
-    public void ValidarData(Date paramDate){
-        Date currentDate = new Date();
+    public void ValidarData(LocalDate paramDate){
+        LocalDate currentDate = LocalDate.now();
 
-        if (!paramDate.after(currentDate)){
+        if (paramDate.isBefore(currentDate)){
             throw new RuntimeException("Data invalida...");
         }
 
@@ -54,27 +53,16 @@ public class PublicacaoServices {
         }
     }
 
-    // Método para executar a expiração de publicações
-    // Este método calcula a data limite (90 dias atrás) e deleta publicações antigas
-    // Utiliza transação automática do @Transactional da query no repository
+
     public void expirarPublicacoesAntigas() {
-        // Obtém a data/hora atual
-        Calendar calendar = Calendar.getInstance();
-        
-        // Subtrai 90 dias da data atual
-        // Calendar.DATE representa dias, então subtraímos 90
-        calendar.add(Calendar.DATE, -90);
-        
-        // Converte para java.util.Date para comparação com a coluna do banco
-        Date dataLimite = calendar.getTime();
-        
-        // Executa a query no repository que deleta todas as publicações
-        // cuja data_publicacao é anterior à data limite calculada
-        // Publicações com mais de 90 dias serão removidas
-        publicacaoRepository.deletarPublicacoesAntigas(dataLimite);
-        
-        // Log para fins de auditoria (opcional)
-        System.out.println("[EXPIRACAO] Publicações anteriores a " + dataLimite + " foram removidas.");
-    }
+
+    LocalDate dataLimite = LocalDate.now().minusDays(90);
+
+    publicacaoRepository.deletarPublicacoesAntigas(dataLimite);
+
+    System.out.println(
+        "[EXPIRACAO] Publicações anteriores a " + dataLimite + " foram removidas."
+    );
+}
 }
 

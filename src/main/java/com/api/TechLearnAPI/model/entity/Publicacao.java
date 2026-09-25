@@ -1,6 +1,6 @@
 package com.api.TechLearnAPI.model.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +30,7 @@ public class Publicacao {
     private byte[] imagem_url; // Ajustar...
 
     @Column(nullable = false)
-    private Date data_publicacao;
+    private LocalDate data_publicacao;
 
     @Column(length = 100, nullable = false)
     private String tipo_publicacao;
@@ -81,11 +81,11 @@ public class Publicacao {
         this.imagem_url = imagem_url;
     }
 
-    public Date getData_publicacao() {
+    public LocalDate getData_publicacao() {
         return data_publicacao;
     }
 
-    public void setData_publicacao(Date data_publicacao) {
+    public void setData_publicacao(LocalDate data_publicacao) {
         this.data_publicacao = data_publicacao;
     }
 
