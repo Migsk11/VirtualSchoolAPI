@@ -53,10 +53,7 @@ public class UsuarioController {
         String email = data.email();
         String password = data.password();
         try {
-            Usuario usuario = usuarioServices.findByEmail(email);
-            boolean findPassword = usuario.getPassword().equals(password);
-
-            return findPassword;
+            return usuarioServices.UsuarioLogin(email, password);
         } catch (Exception e) {
             log.error("Houve um erro no fluxo: Login");
             return false /* algum erro no processo */;
@@ -64,55 +61,27 @@ public class UsuarioController {
         
     }
 
-    //POST ADMIN?
-    @PostMapping("/isAdm")
-    public Boolean ReceberLoginAdm(@RequestBody LoginRequest data) {
-        String email = data.email();
-        String role;
-        Usuario usuario;
-        try {
-            usuario = usuarioServices.findByEmail(email);
-            role = usuario.getRoleUsuario();
-            
-            return role.equals("ROLE_ADM");
-        } catch (Exception e) {
-            log.error("Houve um erro no fluxo: Autenticação do Nivel de Acesso");
-            return false;
-        }
-        
-    }
+    
+
+    public record EmailRequest(String email) {}
 
     //POST MASTER?
     @PostMapping("/isMaster")
-    public Boolean ReceberLoginMaster(@RequestBody LoginRequest data) {
-        String email = data.email();
-        String role;
-        Usuario usuario;
+    public Boolean ReceberLoginMaster(@RequestBody EmailRequest data) {
+
         try {
-            usuario = usuarioServices.findByEmail(email);
-            role = usuario.getRoleUsuario();
+            
+            return usuarioServices.UsuarioIsMaster(data.email);
 
-            return role.equals("ROLE_MASTER");
         } catch (Exception e) {
-            log.error("Houve um erro no fluxo: Autenticação do Nivel de Acesso");
+
+            log.error("Houve um erro no fluxo: Autenticação do Nivel de Acesso: " + e);
             return false;
         }
         
     }
 
-
-    //POST PARA VER SE USUARIO EXISTE
-    @PostMapping("/exists")
-    public Boolean UsuarioExiste(@RequestBody LoginRequest data){
-        String email = data.email();
-        try{
-            usuarioServices.findByEmail(email);
-            return true;
-        }catch(Exception e){
-            return false;
-        }
-        
-    }
+    
 
 
     //GET
@@ -121,35 +90,11 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioRepository.findAll());
     }
 
-    // NEW - GET USER BY EMAIL (returns logged user data by email)
-    @GetMapping("/me/{email}")
-    public ResponseEntity<Object> obterUsuarioLogadoPorEmail(@PathVariable String email) {
-        try {
-            Usuario usuario = usuarioServices.findByEmail(email);
-
-            Map<String, Object> resposta = Map.of(
-                "id", usuario.getId(),
-                "nome", usuario.getNome(),
-                "email", usuario.getEmail(),
-                "role", usuario.getRoleUsuario()
-            );
-
-            return ResponseEntity.ok(resposta);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(
-                Map.of(
-                    "status", 404,
-                    "retorno", "Not Found",
-                    "message", "Usuário não encontrado"
-                )
-            );
-        }
-    }
 
     //POST
     @PostMapping("/auth/register")
     public ResponseEntity<Usuario> SalvarUsuario(@Valid @RequestBody Usuario usuario) {
-        Usuario novo = usuarioRepository.save(usuario);
+        Usuario novo = usuarioServices.save(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(novo);
     }
 

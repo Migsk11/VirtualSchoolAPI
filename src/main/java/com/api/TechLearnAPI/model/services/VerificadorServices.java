@@ -56,9 +56,11 @@ public class VerificadorServices {
 
         Verificador verificador = new Verificador();
 
-
-        Usuario usuario = usuarioRepository.findByEmail(email)
-            .orElseThrow();
+        
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        if(usuario == null){
+            throw new RuntimeException("Usuário não encontrado... e-mail informado: " + email);
+        }
 
 
         if(verificadorRepository.existsByUsuarioId(usuario.getId())){

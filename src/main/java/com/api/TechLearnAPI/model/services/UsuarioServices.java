@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.api.TechLearnAPI.model.entity.Usuario;
@@ -20,17 +21,32 @@ public class UsuarioServices {
     private UsuarioRepository usuarioRepository;
 
 
+    private final PasswordEncoder passwordEncoder;
 
 
-    public Usuario findByEmail(String email){
-        return usuarioRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Email nao encontrado"));
+    public UsuarioServices(PasswordEncoder passwordEncoder){
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public Usuario findByPassword(String password){
-        return usuarioRepository.findByPassword(password)
-            .orElseThrow(() -> new RuntimeException("Senha nao encontrada"));
+
+
+
+    public Boolean UsuarioLogin(String email, String password){
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        
+        return passwordEncoder.matches(password, usuario.getPassword());
     }
+
+    
+    public Boolean UsuarioIsMaster(String email){
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+            
+        return usuario.getRoleUsuario().toLowerCase().equals("role_master");
+            
+    }
+
+
 
     public long ContarUsuarios(){
         return usuarioRepository.count();
@@ -45,14 +61,17 @@ public class UsuarioServices {
 
     //Criar um novo usuario
     public Usuario save(Usuario usuario){
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return usuarioRepository.save(usuario);
     }
+
 
     // Listar Produto por ID
     public Usuario findById(Long id){
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("usuario nao encontrado com o id " + id));
     }
+    
 
     // Deletar Usuario
     public boolean idExists(String id) {

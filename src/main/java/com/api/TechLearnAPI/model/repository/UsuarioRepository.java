@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.api.TechLearnAPI.model.entity.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    Optional<Usuario> findByEmail(String email);
+    Usuario findByEmail(String email);
     Optional<Usuario> findByPassword(String userPassword);
 }
